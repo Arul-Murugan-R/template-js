@@ -1,0 +1,44 @@
+<%- include('./layout/header.ejs') %> 
+</head>
+    <body>
+        <%- include('./layout/nav.ejs') %> 
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Home</li>
+          </ol>
+        </nav>
+        <main>
+          <% if(products.length>0){ %> 
+            <div class="album py-5 bg-light">
+                <div class="container">
+            
+                  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    <% for(let product of products){ %>
+                    <div class="col">
+                      <div class="mt-5 card shadow-sm">
+                        <img class="bd-placeholder-img card-img-top overflow-hidden" width="100%" height="225" src="<%= product.imgUrl %> " alt="">
+            
+                        <div class="card-body">
+                          <a href="/view-page/<%= product._id %> " class="card-link text-decoration-none overflow-hidden" style="height:10px;"><%= product.name %> </a>
+                          <p class="card-text overflow-hidden" style="height:72px;"><%= product.desc %></p>
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-outline-success">View</button>
+                                <button type="button" class="btn btn-outline-primary">Edit</button>
+                            </div>
+                            <small class="text-muted"><%= product.createdAt.toISOString().split("TO") %> </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <% } %> 
+                  </div>
+                </div>
+              </div>
+              <% }else{ %> 
+                <h1>Product not found</h1>
+              <%}%>
+          </main>
+        <%- include('./layout/foot.ejs') %> 
+    </body>
+</html>

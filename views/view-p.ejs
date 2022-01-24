@@ -1,0 +1,46 @@
+<%- include('./layout/header.ejs') %> 
+<style>
+    .img-cont{
+        display:relative;
+    }
+    .img-cust{
+        opacity:0.8;
+        object-fit: cover;
+    }
+    .when{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 18px;
+    }
+    .proImg{
+        object-fit: center;
+        height:300px;
+    }
+</style>
+</head>
+    <body>
+        <%- include('./layout/nav.ejs') %>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/home">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">View Page</li>
+            </ol>
+          </nav>
+        <div class="mt-5 row p-md-4 p-2" style="width:100%">
+            <div class="content col-md-9">
+                <h1 class="title"><%= product.name %> </h1><hr>
+                <div class="profile-img col-md-8 img-thumbnail overflow-hidden proImg">
+                    <img style="width:100%;" src="<%= product.imgUrl %> " alt="">
+                </div><br><br>
+                
+                <p class="text-wrap"><%= product.desc %> </p>
+    
+            </div>
+            
+          </div>
+          <%- include('./layout/contactus.ejs') %> 
+        <%- include('./layout/foot.ejs') %> 
+    </body>
+</html>
