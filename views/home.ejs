@@ -23,8 +23,8 @@
                           <p class="card-text overflow-hidden" style="height:72px;"><%= product.desc %></p>
                           <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-outline-success">View</button>
-                                <button type="button" class="btn btn-outline-primary">Edit</button>
+                              <a href="/view-page/<%= product._id %> " class="btn btn-outline-primary">View</a>
+                                <a href="/edit/<%= product._id %> " class="btn btn-outline-primary">Edit</a>
                             </div>
                             <small class="text-muted"><%= product.createdAt.toISOString().split("TO") %> </small>
                           </div>
@@ -33,6 +33,7 @@
                     </div>
                     <% } %> 
                   </div>
+                  <!-- <a href="/home?add=3" class="btn btn-outline-success">Add More</a> -->
                 </div>
               </div>
               <% }else{ %> 
