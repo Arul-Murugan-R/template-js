@@ -35,7 +35,8 @@
                     <img style="width:100%;" src="<%= product.imgUrl %> " alt="">
                 </div><br><br>
                 
-                <p class="text-wrap"><%= product.desc %> </p>
+                <p class="text-wrap"><%- product.desc.replace(/\n/g,'<br>').replace(/\\b/g,'<b>').replace(/\\cb/g,'</b>').replace(/\\l/g,"<a href='#''>").replace(/\\cl/g,"</a>") %> 
+                </p>
     
             </div>
             

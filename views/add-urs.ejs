@@ -18,15 +18,20 @@
             <li class="breadcrumb-item active" aria-current="page"><% if(edit){ %>Edit-Yours<% }else{ %>  Add-Yours<% }%></li>
           </ol>
         </nav>
+        <% if(message){ %> 
+          <div class="alert alert-danger" role="alert">
+          <%= message %>
+        </div>
+        <% } %> 
         <main class="container">
-            <form class="row col-md-10 border border-secondary rounded p-md-3" method="POST" action="<% if(edit){ %>/edit<% }else{ %>/add-yours<% }%>">
+            <form class="row col-md-10 border border-secondary rounded p-md-3 needs-validation" method="POST" action="<% if(edit){ %>/edit<% }else{ %>/add-yours<% }%>">
                   <div class="form-group col-md-4">
                     <label for="inputName4">Name</label>
-                    <input type="text" class="form-control" name="name" id="inputName4"value="<% if(edit){ %><%= product.name %><% }%>" placeholder="Name">
+                    <input type="text" class="form-control <%= errors.find(p=>{return p.param==='name'})?'is-invalid' : '' %>" name="name" id="inputName4"value="<%= input.name %><% if(edit){ %><%= product.name %><% }%>" placeholder="Name">
                   </div>
                   <div class="form-group col-md-4">
                     <label for="inputPlace4">Place</label>
-                    <input type="Place" class="form-control" name="place" id="inputPlace4"value="<% if(edit){ %><%= product.place %><% }%>" placeholder="Place">
+                    <input type="Place" class="form-control" name="place" id="inputPlace4"value="<%= input.place %><% if(edit){ %><%= product.place %><% }%>" placeholder="Place">
                   </div>
                   <div class="form-group col-md-6">
                     <label for="inputPhoto4">Photo</label>
@@ -34,33 +39,33 @@
                   </div>
                 <div class="form-group col-md-5">
                   <label for="inputNumber">Contact-Number</label>
-                  <input type="text" class="form-control"name="no" id="inputNumber"value="<% if(edit){ %><%= product.no %><% }%>" placeholder="Number for Contacting">
+                  <input type="text" class="form-control"name="no" id="inputNumber"value="<%= input.no %><% if(edit){ %><%= product.no %><% }%>" placeholder="Number for Contacting">
                 </div>
                 <div class="form-group col-md-5">
                   <label for="inputlm2">Land Mark</label>
-                  <input type="text" class="form-control"name="mark" id="inputlm2"value="<% if(edit){ %><%= product.mark %><% }%>" placeholder="Land Mark(Near Which)">
+                  <input type="text" class="form-control"name="mark" id="inputlm2"value="<%= input.mark %><% if(edit){ %><%= product.mark %><% }%>" placeholder="Land Mark(Near Which)">
                 </div>
                 <div class="d-flex">
                     <div class="form-group col-md-5 col-lg-3 me-2">
                       <label for="inputCity">City</label>
-                      <input type="text" class="form-control"name="city"value="<% if(edit){ %><%= product.city %><% }%>" id="inputCity">
+                      <input type="text" class="form-control"name="city"value="<%= input.city %><% if(edit){ %><%= product.city %><% }%>" id="inputCity">
                     </div>
                     <div class="form-group col-md-4 me-2">
                       <label for="inputState">State</label>
-                      <select id="inputState"name="state" value="<% if(edit){ %><%= product.state %><% }%>"class="form-control">
+                      <select id="inputState"name="state" value="<%= input.state %><% if(edit){ %><%= product.state %><% }%>"class="form-control">
                         <option selected>Choose...</option>
                         <option>...</option>
                       </select>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputZip">Zip</label>
-                        <input type="text" class="form-control"name="zip"value="<% if(edit){ %><%= product.zip %><% }%>" id="inputZip">
+                        <input type="text" class="form-control"name="zip"value="<%= input.zip %><% if(edit){ %><%= product.zip %><% }%>" id="inputZip">
                     </div>
                     
                 </div>
                 <div class="form-group col-md-6">
                     <label>Image URL</label>
-                    <input type="text" class="form-control" name="imgUrl"value="<% if(edit){ %><%= product.image %><% }%>" placeholder="Image URL" />
+                    <input type="text" class="form-control <%= errors.find(p=>{return p.param==='imgUrl'})?'is-invalid' : '' %>" name="imgUrl"value="<%= input.imgUrl %><% if(edit){ %><%= product.image %><% }%>" placeholder="Image URL" />
                 </div>
                 <div class="form-group col-md-2 me-2">
                     <label for="inputState">Location</label>
@@ -75,7 +80,7 @@
                   <div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Descrition</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1"name="desc" rows="5"><% if(edit){ %><%= product.desc %><% }%></textarea>
+                        <textarea class="form-control <%= errors.find(p=>{return p.param==='desc'}) ?'is-invalid' : '' %>" id="exampleFormControlTextarea1"name="desc" rows="5"><%= input.desc %><% if(edit){ %><%= product.desc %><% }%></textarea>
                       </div>
                   </div>
                 <div class="form-group">

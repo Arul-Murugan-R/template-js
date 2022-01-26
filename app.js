@@ -2,12 +2,30 @@ const express = require('express');
 const path = require('path')
 const mongoose= require('mongoose')
 const bodyParser = require('body-parser')
+const multer = require('multer');
 
 const app = express();
 const URI = 'mongodb+srv://root:mypass123@cluster0.1tdiu.mongodb.net/temple'
 const homeRoute = require('./routes/home')
 
+const Storage = multer.diskStorage({
+    destination:(req,file,cb)=>{
+        cb(null,'/images')
+    }, 
+    filename:(req,file,cb)=>{
+        cb(null,new Date()+'-'+file.originalname)
+    }
+})
+const fileFilter=(req,file,cb)=>{
+    if(file.mime==='images/png' || file.mime==='image/jpeg' || file.mime==='image/gif' || file.mime==='image/jpg'){
+        cb(null,true)
+    }
+    else{
+        cb(null,false)
+    }
+}
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(multer({storage:Storage,fileFilter:fileFilter}).single('image'))
 app.set('view engine', 'ejs');
 app.set('views','views');
 app.use('/images',express.static(path.join(__dirname,'images')))

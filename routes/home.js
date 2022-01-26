@@ -1,5 +1,6 @@
 const express = require('express');
 const mongodb = require('mongodb')
+const {body,validationResult} = require('express-validator/check')
 
 const route = express.Router();
 
@@ -24,14 +25,35 @@ route.get('/add-yours',(req,res,next) => {
         title:'Add Yours',
         path:req.originalUrl,
         edit:false,
+        message:null,
+        errors:[],
+        input:'',
     });
 })
-route.post('/add-yours',(req,res,next) => {
+route.post('/add-yours',
+[
+    body('name').not().isEmpty().isLength({max:15}).withMessage('Check For the size of name'),
+    body('desc').not().isEmpty().withMessage('Fill with Description'),
+    body('imgUrl').isURL().withMessage('Invalid Url')
+],
+(req,res,next) => {
     // console.log(req.body)
+    const errors = validationResult(req) 
+    // console.log(errors.array())
+    // console.log(errors.array()[0].msg)
+    if(!errors.isEmpty()){
+        return res.render('add-urs',{
+            title:'Add Yours',
+            path:req.originalUrl,
+            edit:false,
+            errors:errors.array(), 
+            message:errors.array()[0].msg,
+            input:req.body
+        });
+    }
     const product = new Product({
         name:req.body.name,
         place:req.body.place,
-        // photo:req.body.photo,
         no:req.body.no,
         mark:req.body.mark,
         city:req.body.city,
@@ -64,7 +86,24 @@ route.use('/view-page',(req,res,next) => {
         path:req.originalUrl,
     });
 })
-route.post('/edit',(req,res,next)=>{
+route.post('/edit',
+[
+    body('name').not().isEmpty().isLength({max:15}).withMessage('Check For the size of name'),
+    body('desc').not().isEmpty().withMessage('Fill with Description'),
+    body('imgUrl').isURL().withMessage('Invalid Url')
+],
+(req,res,next)=>{
+    const errors = validationResult(req) 
+    if(!errors.isEmpty()){
+        return res.render('add-urs',{
+            title:'Add Yours',
+            path:req.originalUrl,
+            edit:false,
+            errors:errors.array(), 
+            message:errors.array()[0].msg,
+            input:req.body
+        });
+    }
     let _id=req.body._id;
     // console.log(req.body)
     Product.findOne({_id:new mongodb.ObjectId(_id)})
@@ -94,7 +133,19 @@ route.use('/edit/:proId',(req,res,next) => {
             path:req.originalUrl,
             edit:true,
             product:product,
+            message:null,
+            errors:[],
+            input:[]
         })
     })
 })
+
+route.use('/delete/:proId',(req,res,next)=>{
+    Product.findByIdAndRemove(req.params.proId)
+    .then((result)=>{
+        // console.log(result)
+        res.redirect('/home')
+    })
+})
+
 module.exports=route;
