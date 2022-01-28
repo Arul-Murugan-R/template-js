@@ -8,16 +8,16 @@ const proSchema=new Schema({
         required:true,
     },
     place:String,
-    // photo:{
-    //     type:String,
-    //     required:true,
-    // },
+    photo:{
+        type:String,
+        required:true,
+    },
     no:String,
     mark:String,
     city:String,
     state:String,
     zip:Number,
-    imgUrl:String,
+    email:String,
     desc:{
         type:String,
         required:true,

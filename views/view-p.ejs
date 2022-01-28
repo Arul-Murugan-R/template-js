@@ -32,7 +32,7 @@
             <div class="content col-md-9">
                 <h1 class="title"><%= product.name %> </h1><hr>
                 <div class="profile-img col-md-8 img-thumbnail overflow-hidden proImg">
-                    <img style="width:100%;" src="<%= product.imgUrl %> " alt="">
+                    <img style="width:100%;" src="/<%= product.photo %>" alt="">
                 </div><br><br>
                 
                 <p class="text-wrap"><%- product.desc.replace(/\n/g,'<br>').replace(/\\b/g,'<b>').replace(/\\cb/g,'</b>').replace(/\\l/g,"<a href='#''>").replace(/\\cl/g,"</a>") %> 

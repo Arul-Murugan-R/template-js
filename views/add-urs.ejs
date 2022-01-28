@@ -24,7 +24,7 @@
         </div>
         <% } %> 
         <main class="container">
-            <form class="row col-md-10 border border-secondary rounded p-md-3 needs-validation" method="POST" action="<% if(edit){ %>/edit<% }else{ %>/add-yours<% }%>">
+            <form class="row col-md-10 border border-secondary rounded p-md-3 needs-validation" method="POST" action="<% if(edit){ %>/edit<% }else{ %>/add-yours<% }%>" novalidate enctype="multipart/form-data">
                   <div class="form-group col-md-4">
                     <label for="inputName4">Name</label>
                     <input type="text" class="form-control <%= errors.find(p=>{return p.param==='name'})?'is-invalid' : '' %>" name="name" id="inputName4"value="<%= input.name %><% if(edit){ %><%= product.name %><% }%>" placeholder="Name">
@@ -35,7 +35,7 @@
                   </div>
                   <div class="form-group col-md-6">
                     <label for="inputPhoto4">Photo</label>
-                    <input type="file" class="form-control"name="photo" id="inputPhoto4" placeholder="Photo">
+                    <input type="file" class="form-control <%= errors.find(p=>{return p.param==='photo'})?'is-invalid' : '' %>"name="photo" id="inputPhoto4" placeholder="Photo">
                   </div>
                 <div class="form-group col-md-5">
                   <label for="inputNumber">Contact-Number</label>
@@ -64,8 +64,8 @@
                     
                 </div>
                 <div class="form-group col-md-6">
-                    <label>Image URL</label>
-                    <input type="text" class="form-control <%= errors.find(p=>{return p.param==='imgUrl'})?'is-invalid' : '' %>" name="imgUrl"value="<%= input.imgUrl %><% if(edit){ %><%= product.image %><% }%>" placeholder="Image URL" />
+                    <label>Email Id</label>
+                    <input type="email" class="form-control" name="email"value="<%= input.email %><% if(edit){ %><%= product.email %><% }%>" placeholder="Email Id" />
                 </div>
                 <div class="form-group col-md-2 me-2">
                     <label for="inputState">Location</label>
