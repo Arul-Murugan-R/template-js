@@ -10,14 +10,14 @@ const homeRoute = require('./routes/home')
 
 const Storage = multer.diskStorage({
     destination:(req,file,cb)=>{
-        cb(null,'/images')
+        cb(null,'images')
     }, 
     filename:(req,file,cb)=>{
-        cb(null,new Date()+'-'+file.originalname)
+        cb(null,parseInt(Math.random()*10000)+'-'+file.originalname)
     }
 })
 const fileFilter=(req,file,cb)=>{
-    if(file.mime==='images/png' || file.mime==='image/jpeg' || file.mime==='image/gif' || file.mime==='image/jpg'){
+    if(file.mime==='image/png' || file.mime==='image/jpeg' || file.mime==='image/gif' || file.mime==='image/jpg'){
         cb(null,true)
     }
     else{
@@ -25,7 +25,7 @@ const fileFilter=(req,file,cb)=>{
     }
 }
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(multer({storage:Storage,fileFilter:fileFilter}).single('image'))
+app.use(multer({storage:Storage}).single('photo'))
 app.set('view engine', 'ejs');
 app.set('views','views');
 app.use('/images',express.static(path.join(__dirname,'images')))
