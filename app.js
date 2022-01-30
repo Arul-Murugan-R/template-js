@@ -3,9 +3,10 @@ const path = require('path')
 const mongoose= require('mongoose')
 const bodyParser = require('body-parser')
 const multer = require('multer');
+require('dotenv').config()
 
 const app = express();
-const URI = 'mongodb+srv://root:mypass123@cluster0.1tdiu.mongodb.net/temple'
+const URI = `mongodb+srv://${process.env.NAME}:${process.env.DPASS}@cluster0.1tdiu.mongodb.net/${process.env.dbname}`
 const homeRoute = require('./routes/home')
 
 const Storage = multer.diskStorage({
