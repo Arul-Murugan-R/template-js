@@ -5,15 +5,23 @@ const fs = require('fs')
 const path = require('path')
 
 const route = express.Router();
-
+let totalSearch=0,productCount=0
 const Product = require('../models/product')
-// let LIMIT =0;
+    Product.find()
+    .then((product)=>{
+        for(let pro of product){
+            totalSearch+=pro.search
+            productCount+=1
+        }
+    })
 
 
 route.get('/home',(req,res,next) => {
     Product.find()
     .then((result)=>{
-        // console.log(result);
+        // console.log((totalSearch/(productCount/2)));
+        const recom=result.filter(p=>{return p['search']>=(totalSearch/(productCount/2))})
+        console.log(recom)
         res.render('home',{
             title:'Home Page',
             path:req.originalUrl,
@@ -32,9 +40,38 @@ route.get('/add-yours',(req,res,next) => {
         input:'',
     });
 })
+route.use('/search',(req,res,next)=>{
+    const search = req.query.search;
+    const filter = req.query.filter || 'location'
+    // console.log(search)
+    Product.find()
+    .then((products)=>{
+        // console.log(products[0][filter])
+        let some=products.filter(p=>{
+            if(p[filter].toLowerCase().includes(search.toLowerCase())){
+                // console.log('search of '+p['name']+' = '+p['search'])
+                p['search']+=1
+                p.save()
+            }
+            return p[filter].toLowerCase().includes(search.toLowerCase())})
+        return some
+    })
+    .then(pro=>{
+        // console.log(pro)
+        if(pro===[]){
+            return res.redirect('/home')
+        }
+        res.render('home',{
+            title:'Search Product',
+            path:req.originalUrl,
+            products:pro,
+        });
+    })
+})
 route.post('/add-yours',
 [
-    body('name').not().isEmpty().isLength({max:15}).withMessage('Check For the size of name'),
+    body('name').not().isEmpty().isLength({max:25}).withMessage('Check For the size of name'),
+    body('location').not().isEmpty().isLength({max:20}).withMessage('Check the size'),
     body('desc').not().isEmpty().withMessage('Fill with Description'),
 ],
 (req,res,next) => {
@@ -53,7 +90,7 @@ route.post('/add-yours',
             input:req.body
         });
     }
-    console.log(req.file)
+    // console.log(req.file)
     if(!req.file){
         return res.status(422).render('add-urs',{
             title:'Add Yours',
@@ -65,7 +102,7 @@ route.post('/add-yours',
         });
     }
     photo=req.file.path.replace('\\','/');
-    console.log(photo)
+    // console.log(photo)
     const product = new Product({
         name:req.body.name,
         place:req.body.place,
@@ -100,11 +137,13 @@ route.use('/view-page',(req,res,next) => {
     res.render('view-p',{
         title:'View Page',
         path:req.originalUrl,
+        product:[]
     });
 })
 route.post('/edit',
 [
-    body('name').not().isEmpty().isLength({max:15}).withMessage('Check For the size of name'),
+    body('name').not().isEmpty().isLength({max:25}).withMessage('Check For the size of name'),
+    body('location').not().isEmpty().isLength({max:20}).withMessage('Check the size'),
     body('desc').not().isEmpty().withMessage('Fill with Description'),
 ],
 (req,res,next)=>{
@@ -112,12 +151,13 @@ route.post('/edit',
     let photo
     if(!errors.isEmpty()){
         return res.render('add-urs',{
-            title:'Add Yours',
+            title:'Edit Yours',
             path:req.originalUrl,
-            edit:false,
+            edit:true,
             errors:errors.array(), 
             message:errors.array()[0].msg,
-            input:req.body
+            product:req.body,
+            input:''
         });
     }
     let _id=req.body._id;

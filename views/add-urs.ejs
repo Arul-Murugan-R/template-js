@@ -67,15 +67,16 @@
                     <label>Email Id</label>
                     <input type="email" class="form-control" name="email"value="<%= input.email %><% if(edit){ %><%= product.email %><% }%>" placeholder="Email Id" />
                 </div>
-                <div class="form-group col-md-2 me-2">
+                <div class="form-group col-md-4 me-2">
                     <label for="inputState">Location</label>
-                    <select id="inputState"name="location" class="form-control">
+                    <!-- <select id="inputState"name="location" class="form-control">
                       <option selected>Choose...</option>
                       <option>Madurai</option>
                       <option>Tirunelveli</option>
                       <option>Chennai</option>
                       <option>Thiruvallur</option>
-                    </select>
+                    </select> -->
+                    <input type="text" class="form-control" name="location"value="<%= input.location %><% if(edit){ %><%= product.location %><% }%>" placeholder="Location" />
                   </div>
                   <div>
                     <div class="form-group">

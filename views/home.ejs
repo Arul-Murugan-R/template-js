@@ -16,16 +16,21 @@
                     <% for(let product of products){ %>
                     <div class="col">
                       <div class="mt-5 card shadow-sm">
-                        <img class="bd-placeholder-img card-img-top overflow-hidden" width="100%" height="225" src="/<%= product.photo %> " alt="">
+                        <img class="bd-placeholder-img card-img-top overflow-hidden" width="100%" height="200" src="/<%= product.photo %> " alt="">
             
                         <div class="card-body">
-                          <a href="/view-page/<%= product._id %> " class="card-link text-decoration-none overflow-hidden" style="height:10px;"><%= product.name %> </a>
-                          <p class="card-text overflow-hidden" style="height:72px;"><%= product.desc %></p>
+                          <div class="d-flex justify-content-between">
+                            <a href="/view-page/<%= product._id %> " class="card-link text-decoration-none overflow-hidden" style="height:22px;"><%= product.name %> </a>
+                            <i class="fas fa-map-marker-alt text-danger float-right me-2"><label class="text-danger ml-4"><%= product.location %></label></i>
+                          </div>
+                          <p class="card-text overflow-hidden" style="height:50px;"><%= product.desc %></p>
                           <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                               <a href="/view-page/<%= product._id %> " class="btn btn-outline-success">View</a>
-                                <a href="/edit/<%= product._id %> " class="btn btn-outline-primary">Edit</a>
-                            </div>
+                                <a href="/edit/<%= product._id %>" class="btn btn-outline-primary">Edit</a>
+                                <a href="/delete/<%= product._id %>" class="btn btn-outline-danger">Delete</a>
+
+                              </div>
                             <small class="text-muted"><%= product.createdAt.toLocaleDateString() %> </small>
                           </div>
                         </div>

@@ -23,6 +23,10 @@ const proSchema=new Schema({
         required:true,
     },
     location:String,
+    search:{
+        type:Number,
+        default:0,
+    }
 
 },{timestamps:true})
 
