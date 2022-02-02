@@ -28,18 +28,44 @@
               <li class="breadcrumb-item active" aria-current="page">View Page</li>
             </ol>
           </nav>
-        <div class="mt-5 row p-md-4 p-2" style="width:100%">
+        <div class="main mt-5 row p-md-4 p-2" style="width:100%">
             <div class="content col-md-9">
                 <h1 class="title"><%= product.name %> </h1><hr>
-                <div class="profile-img col-md-8 img-thumbnail overflow-hidden proImg">
-                    <img style="width:100%;" src="/<%= product.photo %>" alt="">
+                <div class="bd-placeholder-img col-md-8 img-thumbnail proImg overflow-hidden">
+                    <img style="height:280px;width:100%;" src="/<%= product.photo %>" alt="">
                 </div><br><br>
                 
-                <p class="text-wrap"><%- product.desc.replace(/\n/g,'<br>').replace(/\\b/g,'<b>').replace(/\\cb/g,'</b>').replace(/\\l/g,"<a href='#''>").replace(/\\cl/g,"</a>") %> 
+                <p class="text-wrap"><% for(let line of product.desc.split("\n")){  %>
+                    <% if(line.substr(0,5)=='#####'){ %>
+                    <h5><%= line.slice(5) %></h5>
+                    <hr>
+                    <% } else if(line.substr(0,4)=='####'){ %>
+                        <h4><%= line.slice(4) %></h4>
+                        <hr>
+                    <% } else if(line.substr(0,3)=='###'){ %>
+                        <h3><%= line.slice(3) %></h3>
+                        <hr>
+                    <% } else if(line.substr(0,2)=='##'){ %>
+                        <h2><%= line.slice(2) %></h2>
+                        <hr>
+                    <% } else if(line.substr(0,1)=='#'){ %>
+                        <h1><%= line.slice(1) %></h1>
+                        <hr>
+                    <% }else{ %> 
+                        <%= line %>
+                    <% } %>  
+                    <br>
+                    <% } %>  
                 </p>
     
             </div>
-            
+            <div class="additional border border-dotted-secondary col-md-3 pt-5" style="height:400px;">
+                <h6>Enquire </h6><br>
+                <a href="tel:<%= product.no %>" class="text-primary"><i class="fas fa-phone-alt"> +91 <%= product.no %></i></a><br>
+                <a href="mailto:<%=product.email %>" class="text-primary"><i class="far fa-envelope"> <%= product.email %> </i></a><br><br>
+                <strong>Location</strong><br>
+                <i class="fas fa-map-marker-alt text-danger me-2"><label class="text-danger ml-4"><%= product.location %></label></i><br><br>
+            </div>
           </div>
           <%- include('./layout/contactus.ejs') %> 
         <%- include('./layout/foot.ejs') %> 
