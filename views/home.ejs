@@ -8,6 +8,9 @@
           </ol>
         </nav>
         <main>
+          <% if(title==='Search Product'){ %> 
+            <h1>Found : <%= products.length %> </h1>
+          <% } %> 
           <% if(products.length>0){ %> 
             <div class="album py-5 bg-light">
                 <div class="container">
