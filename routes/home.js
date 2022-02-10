@@ -68,6 +68,13 @@ route.use('/search',(req,res,next)=>{
         });
     })
 })
+route.use('/product',(req,res,next)=>{
+    res.render('list',{
+        title:'My List',
+        path:req.originalUrl,
+
+    })
+})
 route.post('/add-yours',
 [
     body('name').not().isEmpty().isLength({max:25}).withMessage('Check For the size of name'),
