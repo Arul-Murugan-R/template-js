@@ -21,7 +21,7 @@ route.get('/home',(req,res,next) => {
     .then((result)=>{
         // console.log((totalSearch/(productCount/2)));
         const recom=result.filter(p=>{return p['search']>=(totalSearch/(productCount/2))})
-        console.log(recom)
+        // console.log(recom)
         res.render('home',{
             title:'Home Page',
             path:req.originalUrl,
