@@ -2,37 +2,41 @@
 </head>
 <body>
 <%- include('./layout/nav.ejs') %>
-
-    <main>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/home">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">My List</li>
+    </ol>
+  </nav>
+    <main class="p-4 m-2">
+        <% if(products.length>0){ %>
         <table class="table table-hover">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
+                <th scope="col">No</th>
+                <th scope="col">_id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Location</th>
                 <th scope="col">Handle</th>
               </tr>
             </thead>
             <tbody>
+            <% for(let product of products){ %>
               <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+                <th scope="row"><%= i++ %></th>
+                <td><%= product._id %></td>
+                <td><%= product.name%></td>
+                <td><%= product.location%></td>
+                <td><a href="/view-page/<%= product._id %> " class="btn btn-outline-success">View</a>
+                    <a href="/edit/<%= product._id %>" class="btn btn-outline-primary">Edit</a>
+                    <a href="/delete/<%= product._id %>" class="btn btn-outline-danger">Delete</a></td>
               </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-              </tr>
+            <% } %>
             </tbody>
           </table>
+          <% }else{ %>
+            <h1>Product not Found</h1>
+        <% } %>
     </main>
 
 <%- include('./layout/foot.ejs') %>

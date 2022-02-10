@@ -69,10 +69,14 @@ route.use('/search',(req,res,next)=>{
     })
 })
 route.use('/product',(req,res,next)=>{
-    res.render('list',{
-        title:'My List',
-        path:req.originalUrl,
-
+    Product.find()
+    .then((product)=>{
+        res.render('list',{
+            title:'My List',
+            path:req.originalUrl,
+            products:product,
+            i:1,
+        })
     })
 })
 route.post('/add-yours',
