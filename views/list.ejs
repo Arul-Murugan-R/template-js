@@ -27,7 +27,8 @@
                 <td><%= product._id %></td>
                 <td><%= product.name%></td>
                 <td><%= product.location%></td>
-                <td><a href="/view-page/<%= product._id %> " class="btn btn-outline-success">View</a>
+                <td class="btn-group">
+                  <a href="/view-page/<%= product._id %> " class="btn btn-outline-success">View</a>
                     <a href="/edit/<%= product._id %>" class="btn btn-outline-primary">Edit</a>
                     <a href="/delete/<%= product._id %>" class="btn btn-outline-danger">Delete</a></td>
               </tr>
