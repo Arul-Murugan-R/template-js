@@ -14,12 +14,14 @@ const userSchema = Schema({
         type:String,
         required:true,
     },
-    product:{
-        type:Schema.Type.Object,
-        ref:'product',
-    },
+    product:[{
+            type:Schema.Types.ObjectId,
+            ref:'product'
+        }
+    ],
     access:{
-        default:'User'
+        type:String,
+        default:'0',
     }
 },{timestamp:true})
 
