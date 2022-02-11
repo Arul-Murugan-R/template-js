@@ -80,8 +80,13 @@
 </head>
 <body>
 <%- include('./layout/nav.ejs')%> 
+<% if(message){ %> 
+	<div class="alert alert-danger" role="alert">
+	<%= message %>
+  </div>
+  <% } %> 
 <div class="signup-form">
-    <form action="/auth/signup" method="post">
+    <form action="/auth/signup" method="post" novalidate>
 		<div class="form-header">
 			<h2>Sign Up</h2>
 			<!--<p>Fill out this form to start your free trial!</p>!-->

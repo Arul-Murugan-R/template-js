@@ -34,7 +34,8 @@
                                 <a href="/delete/<%= product._id %>" class="btn btn-outline-danger">Delete</a>
 
                               </div> -->
-                            <small class="text-muted"><%= product.createdAt.toLocaleDateString() %> </small>
+                              <!-- <time-ago datetime="2022-02-10T11:01:56Z" data-view-component="true" class="no-wrap" title="Feb 10, 2022, 4:31 PM GMT+5:30">23 hours ago</time-ago> -->
+                            <small class="text-muted"><%= product.createdAt.toLocaleDateString('en') %> </small>
                           </div>
                         </div>
                       </div>
