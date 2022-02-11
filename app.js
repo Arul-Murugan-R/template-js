@@ -8,6 +8,7 @@ require('dotenv').config()
 const app = express();
 const URI = `mongodb+srv://${process.env.NAME}:${process.env.DPASS}@cluster0.1tdiu.mongodb.net/${process.env.dbname}`
 const homeRoute = require('./routes/home')
+const authRoute = require('./routes/auth')
 
 const Storage = multer.diskStorage({
     destination:(req,file,cb)=>{
@@ -30,6 +31,7 @@ app.use(multer({storage:Storage}).single('photo'))
 app.set('view engine', 'ejs');
 app.set('views','views');
 app.use('/images',express.static(path.join(__dirname,'images')))
+app.use('/auth',authRoute);
 app.use('/',homeRoute);
 app.use((req,res,next)=>{
     res.status(404).send('<h1>Hello World</h1>');

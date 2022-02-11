@@ -5,9 +5,19 @@ const {body,validationResult} = require('express-validator/check')
 const route = express.Router();
 
 route.use('/login',(req,res,next)=>{
-    res.send('Welcome to Login Page')
+    res.render('login',{
+        path:req.originalUrl,
+        title:'Login Page',
+
+    })
 })
 
 route.use('/signup',(req,res,next)=>{
-    res.send('Welcome to Sign-Up Page')
+    res.render('signup',{
+        path:req.originalUrl,
+        title:'SignUp Page',
+        
+    })
 })
+
+module.exports=route
