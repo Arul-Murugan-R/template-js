@@ -5,7 +5,45 @@ const bcrypt = require('bcrypt')
 const route = express.Router();
 const User = require('../models/user')
 
-route.use('/login',(req,res,next)=>{
+route.post('/login',
+[
+    body('email').not().isEmpty().isEmail().withMessage('Invalid Email'),
+    body('password').not().isEmpty().withMessage('Invalid Password'),
+],
+ (req, res, next) => {
+    const errors = validationResult(req)
+    // console.log(errors.array())
+    if(!errors.isEmpty()){
+        return res.render('signup',{
+            path:req.originalUrl,
+            title:'SignUp Page',
+            message:errors.array()[0].msg,
+        })
+    }
+    User.findOne({email:req.body.email})
+    .then((user)=>{
+        if(!user){
+            return res.render('signup',{
+                path:req.originalUrl,
+                title:'SignUp Page',
+                message:'User Not Found',
+            }) 
+        }
+        bcrypt.compare(req.body.password,user.password)
+        .then((check)=>{
+            if(!check){
+                return res.render('signup',{
+                    path:req.originalUrl,
+                    title:'SignUp Page',
+                    message:'Incorrect Password',
+                })
+            }
+            res.redirect('/home')
+        })
+    })
+})
+
+route.get('/login',(req,res,next)=>{
     res.render('login',{
         path:req.originalUrl,
         title:'Login Page',
@@ -22,7 +60,11 @@ route.post('/signup',
             console.log(val)
             console.log(stat)
             if(stat){
-                return res.redirect('/auth/signup')
+                return res.render('signup',{
+                        path:req.originalUrl,
+                        title:'SignUp Page',
+                        message:'Email Id Already Exists',
+                    })
             }
         })
     }),
