@@ -27,11 +27,16 @@
             </select>
           </div>
         </form>
-
+        <% if(login){ %>
+        <div class="text-end">
+          <a href="/auth/logout" class="btn btn-outline-light me-2">Logout</a>
+        </div>
+        <% }else{ %> 
         <div class="text-end">
           <a href="/auth/login" class="btn btn-outline-light me-2">Login</a>
           <a href="/auth/signup" type="button" class="btn btn-warning">Sign-up</a>
         </div>
+        <% } %>
       </div>
     </div>
   </header>
