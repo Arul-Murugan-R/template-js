@@ -23,21 +23,23 @@ route.post('/login',
     User.findOne({email:req.body.email})
     .then((user)=>{
         if(!user){
-            return res.render('signup',{
+            return res.render('login',{
                 path:req.originalUrl,
-                title:'SignUp Page',
+                title:'Login Page',
                 message:'User Not Found',
             }) 
         }
         bcrypt.compare(req.body.password,user.password)
         .then((check)=>{
             if(!check){
-                return res.render('signup',{
+                return res.render('login',{
                     path:req.originalUrl,
-                    title:'SignUp Page',
+                    title:'Login Page',
                     message:'Incorrect Password',
                 })
             }
+            req.session.isLoggedIn=true;
+            req.session.user=user
             res.redirect('/home')
         })
     })
@@ -60,7 +62,7 @@ route.post('/signup',
             console.log(val)
             console.log(stat)
             if(stat){
-                return res.render('signup',{
+                return req.render('signup',{
                         path:req.originalUrl,
                         title:'SignUp Page',
                         message:'Email Id Already Exists',
@@ -109,6 +111,11 @@ route.get('/signup',(req,res,next)=>{
         path:req.originalUrl,
         title:'SignUp Page',
         message:null
+    })
+})
+route.use('/logout',(req,res,next)=>{
+    req.session.destroy(()=>{
+        res.redirect('/home')
     })
 })
 
