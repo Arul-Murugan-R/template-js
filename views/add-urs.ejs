@@ -50,13 +50,13 @@
                       <label for="inputCity">City</label>
                       <input type="text" class="form-control"name="city"value="<%= input.city %><% if(edit){ %><%= product.city %><% }%>" id="inputCity">
                     </div>
-                    <div class="form-group col-md-4 me-2">
+                    <!-- <div class="form-group col-md-4 me-2">
                       <label for="inputState">State</label>
                       <select id="inputState"name="state" value="<%= input.state %><% if(edit){ %><%= product.state %><% }%>"class="form-control">
                         <option selected>Choose...</option>
                         <option>...</option>
                       </select>
-                    </div>
+                    </div> -->
                     <div class="form-group col-md-3">
                         <label for="inputZip">Zip</label>
                         <input type="text" class="form-control"name="zip"value="<%= input.zip %><% if(edit){ %><%= product.zip %><% }%>" id="inputZip">
@@ -76,7 +76,7 @@
                       <option>Chennai</option>
                       <option>Thiruvallur</option>
                     </select> -->
-                    <input type="text" class="form-control" name="location"value="<%= input.location %><% if(edit){ %><%= product.location %><% }%>" placeholder="Location" />
+                    <input type="text" class="form-control <%= errors.find(p=>{return p.param==='location'}) ?'is-invalid' : '' %>" name="location"value="<%= input.location %><% if(edit){ %><%= product.location %><% }%>" placeholder="Location" />
                   </div>
                   <div>
                     <div class="form-group">
