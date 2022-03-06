@@ -1,4 +1,6 @@
 <%- include('./layout/header.ejs') %> 
+<style>
+</style>
 </head>
     <body>
         <%- include('./layout/nav.ejs') %> 
@@ -46,7 +48,9 @@
                 </div>
               </div>
               <% }else{ %> 
-                <h1>Product not found</h1>
+                <div class="alert alert-primary" role="alert">
+                  Product Not Found <a href="/add-yours" class="alert-link">Add Yours</a>
+                </div>
               <%}%>
           </main>
         <%- include('./layout/foot.ejs') %> 
