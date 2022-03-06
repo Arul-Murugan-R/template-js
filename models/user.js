@@ -16,7 +16,7 @@ const userSchema = Schema({
     },
     product:[{
             type:Schema.Types.ObjectId,
-            ref:'product'
+            ref:'products'
         }
     ],
     access:{
