@@ -1,4 +1,36 @@
 <%- include('./layout/header.ejs') %>
+<style>
+    main{
+      width: 100vw;
+    }
+    @media (max-width:600px){
+      .disable{
+        display:none;
+      }
+    }
+    @media (max-width:410px){
+      .btn-group{
+        width:10px;
+        padding:1px;
+        margin:0 auto;
+      }
+      .btn-group .btn{
+        padding:2px;
+        font-size: 0.9rem;
+      }
+      .main{
+        width:auto !important;
+        padding:3px 1px !important;
+        margin:2px;
+      }
+      .table>:not(caption)>*>*{
+        padding:0.3rem !important;
+      }
+      .btn-group{
+        width:auto !important;
+      }
+    }
+</style>
 </head>
 <body>
 <%- include('./layout/nav.ejs') %>
@@ -8,15 +40,15 @@
       <li class="breadcrumb-item active" aria-current="page">My List</li>
     </ol>
   </nav>
-    <main class="p-4 m-2">
+    <main class="p-lg-4 m-lg-2">
         <% if(products.length>0){ %>
         <table class="table table-hover">
             <thead>
               <tr>
                 <th scope="col">No</th>
-                <th scope="col">_id</th>
+                <th class="disable" scope="col">_id</th>
                 <th scope="col">Name</th>
-                <th scope="col">Location</th>
+                <th class="disable" scope="col">Location</th>
                 <th scope="col">Handle</th>
               </tr>
             </thead>
@@ -24,9 +56,9 @@
             <% for(let product of products){ %>
               <tr>
                 <th scope="row"><%= i++ %></th>
-                <td><%= product._id %></td>
-                <td><%= product.name%></td>
-                <td><%= product.location%></td>
+                <td class="disable"><%= product._id %></td>
+                <td ><%= product.name%></td>
+                <td class="disable"><%= product.location%></td>
                 <td class="btn-group">
                   <a href="/view-page/<%= product._id %> " class="btn btn-outline-success">View</a>
                     <a href="/edit/<%= product._id %>" class="btn btn-outline-primary">Edit</a>
@@ -36,7 +68,9 @@
             </tbody>
           </table>
           <% }else{ %>
-            <h1>Product not Found</h1>
+            <div class="alert alert-primary" role="alert">
+              Product Not Found <a href="/add-yours" class="alert-link">Add Yours</a>
+            </div>
         <% } %>
     </main>
 
