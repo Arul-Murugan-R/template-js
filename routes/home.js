@@ -117,7 +117,7 @@ route.post('/add-yours',status,
             input:req.body
         });
     }
-    console.log(req.file)
+    // console.log(req.file)
     if(!req.file){
         return res.status(422).render('add-urs',{
             title:'Add Yours',
@@ -233,7 +233,7 @@ route.use('/edit/:proId',status,(req,res,next) => {
         if(!product){
             return res.redirect('/home')
         }
-        console.log(product)
+        // console.log(product)
         res.render('add-urs',{
             title:'Edit Product',
             path:req.originalUrl,

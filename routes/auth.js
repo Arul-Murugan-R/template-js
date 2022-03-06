@@ -86,9 +86,9 @@ route.post('/signup',
     body('cpassword').not().isEmpty().withMessage('Requires Confirm Password')
 ],
 (req,res,next)=>{
-    console.log(req.body)
+    // console.log(req.body)
     const errors = validationResult(req)
-    console.log(errors.array())
+    // console.log(errors.array())
     if(!errors.isEmpty()){
         return res.render('signup',{
             path:req.originalUrl,
