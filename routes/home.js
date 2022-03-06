@@ -15,6 +15,9 @@ const Product = require('../models/product')
             productCount+=1
         }
     })
+    .catch((err)=>{
+        console.log(err)
+    })
 
 
 route.get('/home',(req,res,next) => {
@@ -28,6 +31,9 @@ route.get('/home',(req,res,next) => {
             path:req.originalUrl,
             products:result,
         });
+    })
+    .catch((err)=>{
+        console.log(err)
     })
 })
 route.get('/add-yours',(req,res,next) => {
@@ -57,6 +63,9 @@ route.use('/search',(req,res,next)=>{
             return p[filter].toLowerCase().includes(search.toLowerCase())})
         return some
     })
+    .catch((err)=>{
+        console.log(err)
+    })
     .then(pro=>{
         // console.log(pro)
         if(pro===[]){
@@ -68,6 +77,9 @@ route.use('/search',(req,res,next)=>{
             products:pro,
         });
     })
+    .catch((err)=>{
+        console.log(err)
+    })
 })
 route.use('/product',status,(req,res,next)=>{
     Product.find({user:new mongodb.ObjectId(req.user._id)})
@@ -78,6 +90,9 @@ route.use('/product',status,(req,res,next)=>{
             products:product,
             i:1,
         })
+    })
+    .catch((err)=>{
+        console.log(err)
     })
 })
 route.post('/add-yours',status,
@@ -102,20 +117,20 @@ route.post('/add-yours',status,
             input:req.body
         });
     }
-    // console.log(req.file)
+    console.log(req.file)
     if(!req.file){
         return res.status(422).render('add-urs',{
             title:'Add Yours',
             path:req.originalUrl,
             edit:false,
-            errors:[{params:'photo',},], 
+            errors:[{param:'photo'}], 
             message:'Image is not set',
             input:req.body
         });
     }
     photo=req.file.path.replace('\\','/');
     // console.log(photo)
-    console.log(req.user)
+    // console.log(req.user)
     const product = new Product({
         name:req.body.name,
         place:req.body.place,
@@ -182,6 +197,9 @@ route.post('/edit',status,
         .then((result)=>{
             unLink(result.photo)
         })
+        .catch((err)=>{
+            console.log(err)
+        })
     }
     Product.findOne({_id:new mongodb.ObjectId(_id)})
     .then((pro)=>{
@@ -203,6 +221,9 @@ route.post('/edit',status,
             res.redirect('/home')
         })
     })
+    .catch((err)=>{
+        console.log(err)
+    })
 })
 route.use('/edit/:proId',status,(req,res,next) => {
     let _id = req.params.proId;
@@ -223,6 +244,9 @@ route.use('/edit/:proId',status,(req,res,next) => {
             input:[]
         })
     })
+    .catch((err)=>{
+        console.log(err)
+    })
 })
 
 route.use('/delete/:proId',status,(req,res,next)=>{
@@ -231,6 +255,9 @@ route.use('/delete/:proId',status,(req,res,next)=>{
         unLink(result.photo)
         // console.log(result)
         res.redirect('/home')
+    })
+    .catch((err)=>{
+        console.log(err)
     })
 })
 
