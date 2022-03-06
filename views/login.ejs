@@ -39,7 +39,7 @@
     .login-form{
 		width: 390px;
 		margin: 0 auto;	
-		padding: 30px 0;	
+		padding: 30px 0;
 	}
     .login-form form{
 		color: #999;
@@ -76,19 +76,53 @@
     .login-form a:hover{
 		text-decoration: underline;
 	}
+	@media (max-width:410px){
+		.form-control{
+			min-height:41px;
+			width:100%;
+		}
+		.form-header{
+			margin:1px;
+			padding:3px;
+			margin-bottom: 3px;
+		}
+		.form-header h2{
+			font-size:30px;
+		}
+		.login-form{
+			width:100%;
+			margin:5px;
+		}
+		.login-form label{
+			font-size:16px;
+		}
+		.login-form form{
+			padding:10px;
+		}
+	}
 </style>
+<style>
+	@media (max-width:700px){
+		.navBar{
+			display:none;
+		}
+		.naBarAlt{
+			display:flex;
+		}
+	}
+  </style>
 </head>
 <body>
 <%- include('./layout/nav.ejs')%> 
 <div class="login-form">
-    <form action="/auth/login" method="post" novalidate>
+    <form class="responsive"action="/auth/login" method="post" novalidate>
 		<div class="form-header">
 			<h2>Login</h2>
 			<!--<p>Fill out this form to start your free trial!</p>!-->
 		</div>
         <div class="form-group">
 			<label>Email Address</label>
-        	<input type="email" class="form-control" name="email" required="required">
+        	<input type="email" class="form-control" name="email" required="required" value="<%= values.email %>" >
         </div>
 		<div class="form-group">
 			<label>Password</label>
