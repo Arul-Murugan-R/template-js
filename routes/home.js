@@ -3,6 +3,7 @@ const mongodb = require('mongodb')
 const {body,validationResult} = require('express-validator/check')
 const fs = require('fs')
 const path = require('path')
+const status = require('../middleware/status')
 
 const route = express.Router();
 let totalSearch=0,productCount=0
@@ -68,8 +69,8 @@ route.use('/search',(req,res,next)=>{
         });
     })
 })
-route.use('/product',(req,res,next)=>{
-    Product.find()
+route.use('/product',status,(req,res,next)=>{
+    Product.find({user:new mongodb.ObjectId(req.user._id)})
     .then((product)=>{
         res.render('list',{
             title:'My List',
@@ -79,10 +80,10 @@ route.use('/product',(req,res,next)=>{
         })
     })
 })
-route.post('/add-yours',
+route.post('/add-yours',status,
 [
-    body('name').not().isEmpty().isLength({max:25}).withMessage('Check For the size of name'),
-    body('location').not().isEmpty().isLength({max:20}).withMessage('Check the size'),
+    body('name').not().isEmpty().withMessage('Required Name').isLength({max:25}).withMessage('Check For the size of name'),
+    body('location').not().isEmpty().withMessage('Required Location').isLength({max:20}).withMessage('Check the size'),
     body('desc').not().isEmpty().withMessage('Fill with Description'),
 ],
 (req,res,next) => {
@@ -114,6 +115,7 @@ route.post('/add-yours',
     }
     photo=req.file.path.replace('\\','/');
     // console.log(photo)
+    console.log(req.user)
     const product = new Product({
         name:req.body.name,
         place:req.body.place,
@@ -126,6 +128,7 @@ route.post('/add-yours',
         email:req.body.email,
         desc:req.body.desc,
         location:req.body.location,
+        user:req.user._id
     })
     product.save(()=>{
         res.redirect('/home')
@@ -144,17 +147,17 @@ route.use('/view-page/:proId',(req,res,next) => {
     })
     .catch((err)=>console.log(err))
 })
-route.use('/view-page',(req,res,next) => {
-    res.render('view-p',{
-        title:'View Page',
-        path:req.originalUrl,
-        product:[]
-    });
-})
-route.post('/edit',
+// route.use('/view-page',(req,res,next) => {
+//     res.render('view-p',{
+//         title:'View Page',
+//         path:req.originalUrl,
+//         product:[]
+//     });
+// })
+route.post('/edit',status,
 [
-    body('name').not().isEmpty().isLength({max:25}).withMessage('Check For the size of name'),
-    body('location').not().isEmpty().isLength({max:20}).withMessage('Check the size'),
+    body('name').not().isEmpty().withMessage('Requires Name').isLength({max:25}).withMessage('Check For the size of name'),
+    body('location').not().isEmpty().withMessage('Requires Location').isLength({max:20}).withMessage('Check the size'),
     body('desc').not().isEmpty().withMessage('Fill with Description'),
 ],
 (req,res,next)=>{
@@ -195,16 +198,21 @@ route.post('/edit',
         pro.email=req.body.email;
         pro.desc=req.body.desc;
         pro.location=req.body.location;
+        pro.user=req.user._id
         pro.save(()=>{
             res.redirect('/home')
         })
     })
 })
-route.use('/edit/:proId',(req,res,next) => {
+route.use('/edit/:proId',status,(req,res,next) => {
     let _id = req.params.proId;
-    // console.log(_id)
-    Product.findOne({_id:new mongodb.ObjectId(_id)})
+    console.log(_id)
+    Product.findOne({user:new mongodb.ObjectId(req.user._id),_id:new mongodb.ObjectId(_id)})
     .then((product) => {
+        if(!product){
+            return res.redirect('/home')
+        }
+        console.log(product)
         res.render('add-urs',{
             title:'Edit Product',
             path:req.originalUrl,
@@ -217,7 +225,7 @@ route.use('/edit/:proId',(req,res,next) => {
     })
 })
 
-route.use('/delete/:proId',(req,res,next)=>{
+route.use('/delete/:proId',status,(req,res,next)=>{
     Product.findByIdAndRemove(req.params.proId)
     .then((result)=>{
         unLink(result.photo)
