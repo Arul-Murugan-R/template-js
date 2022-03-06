@@ -1,17 +1,19 @@
 
-<header class="p-3 bg-dark text-white sticky-md-top">
+<header class="nav-bar p-3 bg-dark text-white sticky-md-top">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <a href="/home" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none me-3">
           <img class="logo" src="/images/setup/logo6.ico" />
         </a>
-
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-lg-center mb-md-0">
           <li><a href="/home" class="nav-link px-2 <% if(path==='/home'){ %>text-secondary<%}else{ %>  text-white<% } %>">Home</a></li>
+          
           <li><a href="/add-yours" class="nav-link px-2 <% if(path==='/add-yours'){ %>text-secondary<%}else{ %> text-white<% } %>">Add Yours</a></li>
+          <% if(login){ %>
           <li><a href="/product" class="nav-link px-2 <% if(path==='/product'){ %>text-secondary<%}else{ %> text-white<% } %>">My List</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+          <% } %> 
+          <!-- <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">About</a></li> -->
         </ul>
 
         <form class="col-md-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex" action="/search" method="get">
@@ -21,7 +23,6 @@
               <option>name</option>
               <option selected>location</option>
               <option>email</option>
-              <option>_id</option>
               <option>place</option>
               <option>mark</option>
             </select>
