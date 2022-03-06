@@ -26,6 +26,10 @@ const proSchema=new Schema({
     search:{
         type:Number,
         default:0,
+    },
+    user:{
+        type:Schema.Types.ObjectId,
+        ref:'users'
     }
 
 },{timestamps:true})
